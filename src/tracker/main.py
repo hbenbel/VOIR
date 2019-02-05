@@ -1,5 +1,5 @@
 from tracker import *
-import sys
+import argparse
 
 
 confirm_box = False
@@ -10,6 +10,7 @@ box_w = 0
 box_h = 0
 
 
+#OpenCV callback function to get the area of the user selected object
 def selectTarget(event, x, y, flags, param):
     global box_x, box_y, box_w, box_h, confirm_box, draw_rectangle
 
@@ -40,11 +41,13 @@ def selectTarget(event, x, y, flags, param):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python main.py [PATH]")
-        return
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-v", "--video", type=str, help="path to the video to be analyzed", required=True)
+    parser.add_argument("-np", "--nb_particles", type=int, help="number of particles to be used for the tracking", required=False)
+    parser.add_argument("-op", "--object_speed", type=int, help="object speed (used to predict object motion)", required=False)
+    args = parser.parse_args()
 
-    video = cv2.VideoCapture(sys.argv[1])
+    video = cv2.VideoCapture(args.video)
 
     ret, frame = video.read()
     cv2.namedWindow("Tracker")
@@ -61,7 +64,7 @@ def main():
         if cv2.waitKey(30) == ord('c'):
             break
 
-    tracker = Tracker(frame, (box_x, box_y, box_w, box_h))
+    tracker = Tracker(frame, (box_x, box_y, box_w, box_h), args.nb_particles, args.object_speed)
     tracker.ParticlesInitilization()
     tracker.GetTargetHistogram()
     while 1:
