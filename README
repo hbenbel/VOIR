@@ -10,6 +10,8 @@ DESCRIPTION
   Detect target and track object in video
 
 USAGE
+    Tracker:
+        python main.py [-h] -v VIDEO [-np NB_PARTICLES] [-op OBJECT_SPEED]
 
 CONTRIBUTORS
   Sirine Kéfi
