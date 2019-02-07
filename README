@@ -10,6 +10,11 @@ DESCRIPTION
   Detect target and track object in video
 
 USAGE
+    Detector:
+      python main.py [-h] -i IMAGE [-ct CANNY_THRESHOLD] [-mcas MIN_CONTOUR_AREA_SIZE]
+
+      The input image will be copied in the folder "negative" if no targets are found
+      and in the folder "positive" otherwise
     Tracker:
         python main.py [-h] -v VIDEO [-np NB_PARTICLES] [-op OBJECT_SPEED]
 
