@@ -55,11 +55,11 @@ class Tracker():
         self.particles_position[:, 1] = np.maximum(0, np.minimum(self.image.shape[1] - self.target_image.shape[1], self.particles_position[:, 1]))
 
     #Compute the likelihood of a particle with the Kullback-Lieber divergence
-    #computed on the local particle BGR histogram and on the candidate target BGR histogram
+    #computed on the target BGR histogram and on the candidate target BGR histogram
     def ParticleAppearanceModel(self, frame, particle_position):
         candidate_target_image = frame[int(particle_position[0]):int(particle_position[0]) + self.target_image.shape[0],
                                        int(particle_position[1]):int(particle_position[1]) + self.target_image.shape[1]]
-        
+
         candidate_target_histogram_b = cv2.calcHist([candidate_target_image], [0], None, [255], [0,256]).flatten()
         candidate_target_histogram_g = cv2.calcHist([candidate_target_image], [1], None, [255], [0,256]).flatten()
         candidate_target_histogram_r = cv2.calcHist([candidate_target_image], [2], None, [255], [0,256]).flatten()
